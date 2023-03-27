@@ -1,7 +1,7 @@
 void enter_dock(int motor_power)
 {
   	drive(motor_power, -motor_power);
-	while(getGyroDegrees != 0)
+	while(getGyroDegrees(S2) != 0)
   	{}
   	drive(0, 0);
   	wait1Msec(1000);
