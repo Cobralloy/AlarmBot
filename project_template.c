@@ -7,6 +7,7 @@ void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
 const int NUM_READINGS = 40; // MS_INTERVAL * NUM_READINGS = READING WINDOW
+const float LENGTH = 30;
 
 task main()
 {
