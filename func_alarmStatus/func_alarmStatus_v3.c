@@ -5,7 +5,7 @@ float calculateMean(ubyte *values)
 	float sum = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
 		sum += values[i];
-	return sum /= NUM_READINGS;
+	return sum = NUM_READINGS;
 }
 
 int returnMax(ubyte *values)
