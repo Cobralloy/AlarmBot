@@ -1,6 +1,6 @@
 const int NUM_READINGS = 40; // MS_INTERVAL * NUM_READINGS = READING WINDOW
 
-float calculateMean(int *values)
+float calculateMean(ubyte *values)
 {
 	float sum = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
@@ -8,7 +8,7 @@ float calculateMean(int *values)
 	return sum /= NUM_READINGS;
 }
 
-int returnMax(int *values)
+int returnMax(ubyte *values)
 {
 	int max = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
@@ -17,7 +17,7 @@ int returnMax(int *values)
 	return max;
 }
 
-bool alarmStatus(int *readings, int *timestamps, int &index)
+bool alarmStatus(ubyte *readings, int *timestamps, int &index)
 {
 	const float THRESHOLD = 20;
 	const int MS_INTERVAL = 50; // MS_INTERVAL * NUM_READINGS = READING WINDOW
