@@ -2,8 +2,8 @@
 
 void configureSensors();
 void drive(int left, int right);
-void driveDistance (int cm, int power);
-void rotateAngle(int angle, int power);
+void driveDistance (int cm, int motorPower);
+void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
 task main()
@@ -38,7 +38,7 @@ void drive(int left, int right)
 	motor[motorD] = -right;
 }
 
-void driveDistance (int cm, int power)
+void driveDistance (int cm, int motorPower)
 {
 	cm *= -1;
 	const float CM_TO_DEG = 180/(2.75*PI);
@@ -46,13 +46,13 @@ void driveDistance (int cm, int power)
 	int targetCount = initialCount + cm*CM_TO_DEG;
 	if (initialCount < targetCount)
 	{
-		motor[motorA] = motor[motorD] = power;
+		motor[motorA] = motor[motorD] = motorPower;
 		while (nMotorEncoder[motorA] < targetCount)
 		{}
 	}
 	else
 	{
-		motor[motorA] = motor[motorD] = -power;
+		motor[motorA] = motor[motorD] = -motorPower;
 		while (nMotorEncoder[motorA] > targetCount)
 		{}
 	}
@@ -72,19 +72,19 @@ void driveDistance (int cm, int power)
 	motor[motorA] = motor[motorD] = 0;
 }
 
-void rotateAngle(int angle, int power) // rotates robot in place to given angle then stops. Positive angles are clockwise when viewed from above
+void rotateAngle(int angle, int motorPower) // rotates robot in place to given angle then stops. Positive angles are clockwise when viewed from above
 {
 	int initialAngle = getGyroDegrees(S2);
 	int targetAngle = initialAngle + angle;
 	if (angle > 0)
 	{
-		drive(power, -power);
+		drive(motorPower, -motorPower);
 		while(getGyroDegrees(S2) < targetAngle)
 		{}
 	}
 	else
 	{
-		drive(-power, power);
+		drive(-motorPower, motorPower);
 		while(getGyroDegrees(S2) > targetAngle)
 		{}
 	}
