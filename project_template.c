@@ -6,8 +6,23 @@ void driveDistance (int cm, int motorPower);
 void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
+const int NUM_READINGS = 40; // MS_INTERVAL * NUM_READINGS = READING WINDOW
+
 task main()
 {
+	configureSensors();
+	
+	// Initialization for alarmStatus
+	int readings[NUM_READINGS];
+	int timestamps[NUM_READINGS];
+	for (int i = 0; i < NUM_READINGS; i++)
+	{
+		readings[i] = 0;
+		timestamps[i] = 0;
+	}
+	int index = 0;
+	
+	// Sensor Debugging
 	displayBigTextLine(1, "DBA: %d", SensorValue[S4]); // Sound sensor
 	displayBigTextLine(4,"C1 %d",readMuxSensor(msensor_S1_1)); // Touch sensor
 	displayBigTextLine(8,"C2 %d",readMuxSensor(msensor_S1_2)); // Ultrasonic Sensor
