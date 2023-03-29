@@ -11,7 +11,7 @@ bool disconnectCharger() //Devaditya Chakrabarty
 	motor[motorB] = 0;
 	if (time1[T2] > 2999)
 	{
-		driveDistance(8, 100)
+		driveDistance(2, 100);
 		return false;
 	}
 	else
