@@ -1,9 +1,9 @@
 int detectSurface(long &red, long &green, long &blue)
 {
 	// Target values[][0 to 2] and tolerances[][3 to 5]
-	const long TAPE [5][6] = {{78, 10, 8, 5, 5, 5}, // red tape
-								{6, 9, 6, 5, 5, 5}, // black tape
-								{40, 10, 8, 50, 5, 5}, // center
+	const long TAPE [5][6] = {{80, 10, 8, 20, 5, 5}, // red tape
+								{9, 9, 6, 5, 5, 5}, // black tape
+								{38, 10, 8, 25, 5, 5}, // center
 								{83, 91, 73, 15, 15, 15}, // white
 								{32, 57, 10, 25, 10, 15}}; // green
 	// WEEF Lab RGB values: {r, g, b}
@@ -38,20 +38,21 @@ void trackLine()
 		if (surface == 1)
 		{
 			while (detectSurface(red, green, blue) != 3)
-				drive(20, 0);
+				drive(10, 0);
 		}
 		else if (surface == 2)
 		{
 			while (detectSurface(red, green, blue) != 3)
-				drive(0, 20);
+				drive(0, 10);
 		}
 		else if (surface == 3)
 		{
-			drive(30,30);
-		}	
-		else
+			drive(20, 20);
+		}
+		else if (surface == 5)
 		{
 			drive(0, 0);
+			displayBigTextLine(1, "Green");
 		}
 	}
 }
