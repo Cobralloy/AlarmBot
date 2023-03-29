@@ -4,9 +4,7 @@ float calculateMean(int *values)
 {
 	float sum = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
-	{
 		sum += values[i];
-	}
 	return sum /= NUM_READINGS;
 }
 
@@ -14,10 +12,8 @@ int returnMax(int *values)
 {
 	int max = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
-	{
 		if (values[i] > max)
 			max = values[i];
-	}
 	return max;
 }
 
