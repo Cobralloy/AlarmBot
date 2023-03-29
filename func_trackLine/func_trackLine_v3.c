@@ -32,8 +32,9 @@ void trackLine()
 	{}
 	displayBigTextLine(1, "Line detected");
 	int surface = detectSurface(red, green, blue);
-	while (detectSurface(red, green, blue) != 4)
+	while (surface != 5)
 	{
+		surface = detectSurface(red, green, blue);
 		if (surface == 1)
 		{
 			while (detectSurface(red, green, blue) != 3)
@@ -53,6 +54,4 @@ void trackLine()
 			drive(0, 0);
 		}
 	}
-	
 }
-
