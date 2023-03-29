@@ -1,5 +1,4 @@
 void enter_dock(int motor_power)
-
 {
 	if (getGyroDegrees(S2) > 180)
 	{
