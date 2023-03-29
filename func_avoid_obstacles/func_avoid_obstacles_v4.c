@@ -13,7 +13,7 @@ void avoid_obstacles ()
 	{
 		rotateRandomAngle (120,180,100);
 	}
-	else if (readMuxSensor(mesensor_S1_2 < LENGTH + 30)
+	else if (readMuxSensor(msensor_S1_2) < LENGTH + 30)
 	{
 		rotateRandomAngle(30, 90, 50);
 	}
