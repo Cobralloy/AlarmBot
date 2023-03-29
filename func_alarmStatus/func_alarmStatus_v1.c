@@ -5,7 +5,7 @@ bool alarmStatus (bool driving, bool &lastStatus)
 	const int DURATION_THRESHOLD = 1000;
 	if (driving)
 	{
-		if (SensorValue[S1] < DB_THRESHOLD)
+		if (SensorValue[S4] < DB_THRESHOLD)
 		{
 			if (!lastStatus)
 			{
@@ -32,7 +32,7 @@ bool alarmStatus (bool driving, bool &lastStatus)
 	}
 	else
 	{
-		if (SensorValue[S1] > DB_THRESHOLD)
+		if (SensorValue[S4] > DB_THRESHOLD)
 		{
 			if (lastStatus)
 			{
