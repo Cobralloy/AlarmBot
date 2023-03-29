@@ -14,7 +14,7 @@ task main()
 	configureSensors();
 	
 	// Initialization for alarmStatus
-	int readings[NUM_READINGS];
+	ubyte readings[NUM_READINGS];
 	int timestamps[NUM_READINGS];
 	for (int i = 0; i < NUM_READINGS; i++)
 	{
