@@ -1,10 +1,10 @@
-int detectSurface(long red, long green, long blue)
+int detectSurface(long &red, long &green, long &blue)
 {
 	// Target values[][0 to 2] and tolerances[][3 to 5]
-	const long TAPE [2][3] = {{70, 20, 20, 10, 10, 10}, // red tape
-								{10, 10, 10, 5, 5, 5}, // black tape
-								{30, 15, 15, 5, 5, 5}, // center
-								{100, 100, 100, 20, 20, 20}}; // white
+	const long TAPE [4][6] = {{78, 10, 8, 5, 5, 5}, // red tape
+								{6, 9, 6, 5, 5, 5}, // black tape
+								{50, 15, 15, 10, 5, 5}, // center
+								{83, 91, 73, 10, 10, 10}}; // white
 	// WEEF Lab RGB values: {r, g, b}
 	getColorRGB(S3, red, green, blue);
 	for (int i = 0; i <= 3; i++)
