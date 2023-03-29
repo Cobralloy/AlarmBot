@@ -8,14 +8,14 @@ int randomAngle(int lower, int upper);
 
 task main()
 {
-	displayBigTextLine(1, "DBA: %d", SensorValue[S1]); // Sound sensor
-	displayBigTextLine(4,"C1 %d",readMuxSensor(msensor_S4_1)); // Touch sensor
-	displayBigTextLine(8,"C2 %d",readMuxSensor(msensor_S4_2)); // Ultrasonic Sensor
+	displayBigTextLine(1, "DBA: %d", SensorValue[S4]); // Sound sensor
+	displayBigTextLine(4,"C1 %d",readMuxSensor(msensor_S1_1)); // Touch sensor
+	displayBigTextLine(8,"C2 %d",readMuxSensor(msensor_S1_2)); // Ultrasonic Sensor
 }
 
 void configureSensors()
 {
-	SensorType[S1] = sensorSoundDBA;
+	SensorType[S4] = sensorSoundDBA;
 	SensorType[S2] = sensorEV3_Gyro;
 	wait1Msec(50);
 	SensorMode[S2] = modeEV3Gyro_RateAndAngle;
@@ -26,10 +26,10 @@ void configureSensors()
 	wait1Msec(50);
 	SensorMode[S3] = modeEV3Color_Color;
 	wait1Msec(50);
-	SensorType[S4] = sensorEV3_GenericI2C;
+	SensorType[S1] = sensorEV3_GenericI2C;
 	wait1Msec(100);
-	initSensorMux(msensor_S4_1, touchStateBump);
-	initSensorMux(msensor_S4_2, sonarCM);
+	initSensorMux(msensor_S1_1, touchStateBump);
+	initSensorMux(msensor_S1_2, sonarCM);
 }
 
 void drive(int left, int right)
