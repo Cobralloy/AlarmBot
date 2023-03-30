@@ -76,13 +76,13 @@ void rotateAngle(int angle, int motorPower) // rotates robot in place to given a
 	wait1Msec(50);
 	if (getGyroDegrees(S2) < targetAngle) // robot needs to rotate clockwise to correct error
 	{
-		drive(10,-10);
+		drive(20,-20);
 		while(getGyroDegrees(S2) < targetAngle)
 		{}
 	}
 	else if (getGyroDegrees(S2) > targetAngle) // robot needs to rotate counterclockwise to correct error
 	{
-		drive(-10,10);
+		drive(-20,20);
 		while(getGyroDegrees(S2) > targetAngle)
 		{}
 	}
