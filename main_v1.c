@@ -1,7 +1,7 @@
 #include "UW_sensorMux.c"
 #include "trivial_functions.c"
 #include "func_alarmStatus_v4.c"
-#include "func_rotateRandomAngle.c"
+#include "func_rotateRandomAngle_v1.c"
 #include "func_avoid_obstacles.c"
 #include "func_disconnectCharger_v1.c"
 #include "func_enter_dock_v3.c"
