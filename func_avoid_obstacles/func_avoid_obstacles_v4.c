@@ -6,6 +6,8 @@ void rotateRandomAngle (int min_angle, int max_angle, int motorpower)
 	rotateAngle(angle,motorpower);
 }
 
+const int LENGTH = 30;
+
 void avoid_obstacles ()
 {
 	if (SensorValue[S3] == (int) colorRed)
