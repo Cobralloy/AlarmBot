@@ -6,9 +6,6 @@ void driveDistance (int cm, int motorPower);
 void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
-const int NUM_READINGS = 40; // MS_INTERVAL * NUM_READINGS = READING WINDOW
-const float LENGTH = 30;
-
 void rotateRandomAngle (int min_angle, int max_angle, int motorpower)
 {
 	int angle = randomAngle (-180,180);
@@ -23,20 +20,24 @@ void avoid_obstacles ()
 {
 	if (SensorValue[S3] == (int) colorRed)
 	{
-		rotateRandomAngle (90,180,50);
+		rotateRandomAngle (90,180,20);
+		wait1Msec (1000);
 	}
 	else if (readMuxSensor(msensor_S1_1) == 1)
 	{
-		drive(-15, 70);
-		rotateRandomAngle(45, 90, 50);
+		drive(-15, 20);
+		rotateRandomAngle(45, 90, 20);
+		wait1Msec(1000);
 	}
 	else if (readMuxSensor(msensor_S1_2) < LENGTH)
 	{
-		rotateRandomAngle (120,180,100);
+		rotateRandomAngle (120,180,20);
+		wait1Msec(1000);
 	}
 	else if (readMuxSensor(msensor_S1_2) < LENGTH + 30)
 	{
-		rotateRandomAngle(30, 90, 50);
+		rotateRandomAngle(30, 90, 20);
+		wait1Msec(1000);
 	}
 }
 
@@ -188,6 +189,12 @@ task main()
 	}
 	int index = 0;
 
+	while (true)
+	{
+		drive(30, 30);
+		avoid_obstacles();
+	}
+	
 	while (!alarmStatus(readings, timestamps, index))
 	{}
 	bool disconnected = disconnectCharger();
