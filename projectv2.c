@@ -188,12 +188,6 @@ task main()
 		timestamps[i] = 0;
 	}
 	int index = 0;
-
-	while (true)
-	{
-		drive(30, 30);
-		avoid_obstacles();
-	}
 	
 	while (!alarmStatus(readings, timestamps, index))
 	{}
