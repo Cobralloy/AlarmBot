@@ -4,7 +4,7 @@ int detectSurface(long &red, long &green, long &blue)
 	const long TAPE [5][6] = {{80, 10, 8, 20, 5, 5}, // red tape
 								{9, 9, 6, 5, 5, 5}, // black tape
 								{38, 10, 8, 25, 5, 5}, // center
-								{83, 91, 73, 15, 15, 15}, // white
+								{78, 86, 70, 20, 20, 20}, // white
 								{32, 57, 10, 25, 10, 15}}; // green
 	// WEEF Lab RGB values: {r, g, b}
 	getColorRGB(S3, red, green, blue);
