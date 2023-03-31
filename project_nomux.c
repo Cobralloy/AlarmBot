@@ -48,14 +48,14 @@ int returnMax(ubyte *values)
 	return max;
 }
 
-bool alarmStatus(ubyte *readings, int *timestamps, int &index)
+bool alarmStatus(ubyte *readings, int &timestamp, int &index)
 {
 	const float THRESHOLD = 25;
 	const float MAX_THRESHOLD = 70;
 	const int MS_INTERVAL = 50; // MS_INTERVAL * NUM_READINGS = READING WINDOW
-	if (index == 0 ? time1[T1] - timestamps[NUM_READINGS-1] > MS_INTERVAL : time1[T1] - timestamps[index-1] > MS_INTERVAL)
+	if (index == 0 ? time1[T1] - timestamp > MS_INTERVAL : time1[T1] - timestamps[index-1] > MS_INTERVAL)
 	{
-		timestamps[index] = time1[T1];
+		timestamp = time1[T1];
 		readings[index] = SensorValue[S4];
 		index++;
 	}
@@ -110,7 +110,7 @@ task main()
 
 	// Initialization for alarmStatus
 	ubyte readings[NUM_READINGS];
-	int timestamps[NUM_READINGS];
+	int timestamp = 0;
 	for (int i = 0; i < NUM_READINGS; i++)
 	{
 		readings[i] = 0;
@@ -118,7 +118,7 @@ task main()
 	}
 	int index = 0;
 
-	while (!alarmStatus(readings, timestamps, index))
+	while (!alarmStatus(readings, timestamp, index))
 	{}
 	bool disconnected = disconnectCharger();
 	if (!disconnected)
@@ -127,7 +127,7 @@ task main()
 	rotateAngle(180, 100);
 	//while (alarmStatus(readings, timestamps, index))
 	driveDistance(50, 30);
-	while (alarmStatus(readings, timestamps, index))
+	while (alarmStatus(readings, timestamp, index))
 	{
 		avoid_obstacles();
 		drive(80, 80);
