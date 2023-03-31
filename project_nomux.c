@@ -53,7 +53,7 @@ bool alarmStatus(ubyte *readings, int &timestamp, int &index)
 	const float THRESHOLD = 25;
 	const float MAX_THRESHOLD = 70;
 	const int MS_INTERVAL = 50; // MS_INTERVAL * NUM_READINGS = READING WINDOW
-	if (index == 0 ? time1[T1] - timestamp > MS_INTERVAL : time1[T1] - timestamps[index-1] > MS_INTERVAL)
+	if (index == 0 ? time1[T1] - timestamp > MS_INTERVAL : time1[T1] - timestamp > MS_INTERVAL)
 	{
 		timestamp = time1[T1];
 		readings[index] = SensorValue[S4];
@@ -69,14 +69,13 @@ bool alarmStatus(ubyte *readings, int &timestamp, int &index)
 void enter_dock()
 {
 	const int motor_power = 20;
-	/*if (getGyroDegrees(S2) % 360 > 180)
+	if (getGyroDegrees(S2) % 360 > 180)
 		drive(motor_power, -motor_power);
 	else if (getGyroDegrees(S2) % 360 < 180)
 		drive(-motor_power, motor_power);
 	while(getGyroDegrees(S2) % 360 != 0)
 	{}
-	drive(0, 0); */
-	rotateAngle(90, 30);
+	drive(0, 0); 
 	wait1Msec(1000);
 	driveDistance(35, motor_power);
 }
@@ -114,7 +113,6 @@ task main()
 	for (int i = 0; i < NUM_READINGS; i++)
 	{
 		readings[i] = 0;
-		timestamps[i] = 0;
 	}
 	int index = 0;
 
