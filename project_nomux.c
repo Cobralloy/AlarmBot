@@ -1,11 +1,18 @@
+#include "UW_SensorMux.c"
+
+// Function prototypes for trivial functions
 void configureSensors();
 void drive(int left, int right);
 void driveDistance (int cm, int motorPower);
 void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
-const int LENGTH = 30;
-#include "func_trackline.c"
+const int LENGTH = 30; // Length of robot
+#include "func_trackline.c" 
+/* Line tracking function included separately so when RGB values and tolerances are changed, 
+they can automatically be applied to the main program as well as any 
+other programs used to test functions
+*/
 
 void avoid_obstacles ()
 {
@@ -17,7 +24,7 @@ void avoid_obstacles ()
 		if (detectSurface(red, green, blue) != 4)
 		rotateAngle(180, 50);
 	}
-	else if (SensorValue[S1] < LENGTH)
+	else if (SensorValue[S1] < LENGTH) // Rotate more quickly and further if the user's hand is above the phone
 	{
 		rotateAngle(randomAngle(140, 180), 80);
 		wait1Msec(200);
@@ -29,7 +36,7 @@ void avoid_obstacles ()
 	}
 }
 
-const int NUM_READINGS = 40; // MS_INTERVAL * NUM_READINGS = READING WINDOW
+const int NUM_READINGS = 40; 
 
 float calculateMean(ubyte *values)
 {
@@ -48,12 +55,13 @@ int returnMax(ubyte *values)
 	return max;
 }
 
-bool alarmStatus(ubyte *readings, int &timestamp, int &index)
+bool alarmStatus(ubyte *readings, int &timestamp, int &index) // ubyte used to avoid exceeding memory limit
 {
 	const float THRESHOLD = 25;
 	const float MAX_THRESHOLD = 70;
-	const int MS_INTERVAL = 50; // MS_INTERVAL * NUM_READINGS = READING WINDOW
-	if (index == 0 ? time1[T1] - timestamp > MS_INTERVAL : time1[T1] - timestamp > MS_INTERVAL)
+	const int MS_INTERVAL = 50; // MS_INTERVAL * NUM_READINGS = reading window for rolling average
+	
+	if (time1[T1] - timestamp > MS_INTERVAL) 
 	{
 		timestamp = time1[T1];
 		readings[index] = SensorValue[S4];
@@ -61,7 +69,8 @@ bool alarmStatus(ubyte *readings, int &timestamp, int &index)
 	}
 	if (index > NUM_READINGS)
 		index = 0;
-	if (calculateMean(readings) > THRESHOLD && returnMax(readings) > MAX_THRESHOLD)
+	// return true if average and peak volume threshold are both met
+	if (calculateMean(readings) > THRESHOLD && returnMax(readings) > MAX_THRESHOLD) 
 		return true;
 	return false;
 }
@@ -69,18 +78,12 @@ bool alarmStatus(ubyte *readings, int &timestamp, int &index)
 void enter_dock()
 {
 	const int motor_power = 20;
-	if (getGyroDegrees(S2) % 360 > 180)
-		drive(motor_power, -motor_power);
-	else if (getGyroDegrees(S2) % 360 < 180)
-		drive(-motor_power, motor_power);
-	while(getGyroDegrees(S2) % 360 != 0)
-	{}
-	drive(0, 0); 
+	rotateAngle(90, 30);
 	wait1Msec(1000);
 	driveDistance(35, motor_power);
 }
 
-bool disconnectCharger() //Devaditya Chakrabarty
+bool disconnectCharger() 
 {
 	nMotorEncoder[motorB] = 0;
 	motor[motorB] = 100;
@@ -90,10 +93,10 @@ bool disconnectCharger() //Devaditya Chakrabarty
 	while(nMotorEncoder[motorB] < 90 && time1[T2] < 3000)
 	{}
 	drive(0,0);
-	motor[motorB] = 0;
+	motor[motorB] = 0;	
 	if (time1[T2] > 2999)
 	{
-		driveDistance(2, 100);
+		driveDistance(2, 100); // Relieve charging cables of tension if disconnecting fails
 		return false;
 	}
 	else
@@ -115,21 +118,27 @@ task main()
 		readings[i] = 0;
 	}
 	int index = 0;
-
+	
+	// Wait for alarm
 	while (!alarmStatus(readings, timestamp, index))
 	{}
+	
+	// Disconnect chargers and enter preset area
 	bool disconnected = disconnectCharger();
 	if (!disconnected)
 		return;
 	driveDistance(-40, 100);
 	rotateAngle(180, 100);
-	//while (alarmStatus(readings, timestamps, index))
 	driveDistance(50, 30);
+	
+	// Avoid obstacles and user while waiting for alarm to turn off
 	while (alarmStatus(readings, timestamp, index))
 	{
 		avoid_obstacles();
 		drive(80, 80);
 	}
+	
+	// Return to dock
 	trackLine();
 	enter_dock();
 }
