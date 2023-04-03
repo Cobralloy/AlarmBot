@@ -1,4 +1,4 @@
-int detectSurface(long &red, long &green, long &blue)
+int detectSurface(long &red, long &green, long &blue) // Passed by reference so values can be output for debugging
 {
 	// Target values[][0 to 2] and tolerances[][3 to 5]
 	const long TAPE [5][6] = {{80, 10, 8, 20, 5, 5}, // red tape
@@ -7,6 +7,7 @@ int detectSurface(long &red, long &green, long &blue)
 				{74, 82, 67, 20, 20, 20}, // white
 				{32, 57, 10, 25, 10, 15}}; // green
 	getColorRGB(S3, red, green, blue);
+	// compare red, green, and blue values to each colour from the 2D array
 	for (int i = 0; i <= 4; i++)
 	{
 		if (abs(TAPE[i][0] - red) < TAPE[i][3]		// compare red
@@ -29,29 +30,30 @@ void trackLine()
 	while (detectSurface(red, green, blue) != 3)
 	{}
 	
+	// Determine direction to drive in depending on detected colour until green is detected
 	int surface = detectSurface(red, green, blue);
 	while (surface != 5)
 	{
 		surface = detectSurface(red, green, blue);
-		if (surface == 1)
+		if (surface == 1) // turn right if red is detected
 		{
 			while (detectSurface(red, green, blue) != 3)
 				drive(15, 3);
 			drive(0, 3); // Correct overshoot
 			wait1Msec(30);
 		}
-		else if (surface == 2)
+		else if (surface == 2) // turn left if black is detected
 		{
 			while (detectSurface(red, green, blue) != 3)
 				drive(3, 15);
 			drive(3, 0);
 			wait1Msec(30);
 		}
-		else if (surface == 3)
+		else if (surface == 3) // go straight if between red and black
 		{
 			drive(30, 30);
 		}
-		else if (surface == 5)
+		else if (surface == 5) // stop if green is detected
 		{
 			drive(0, 0);
 			displayBigTextLine(1, "Green");
