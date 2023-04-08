@@ -7,7 +7,7 @@ void driveDistance (int cm, int motorPower);
 void rotateAngle(int angle, int motorPower);
 int randomAngle(int lower, int upper);
 
-const int LENGTH = 30; // Length of robot
+
 #include "func_trackline.c" 
 /* Line tracking function included separately so when RGB values and tolerances are changed, 
 they can automatically be applied to the main program as well as any 
@@ -16,6 +16,7 @@ other programs used to test functions
 
 void avoid_obstacles ()
 {
+	const int LENGTH = 30; // Length of robot
 	long red = 0, green = 0, blue = 0;
 	if (detectSurface(red, green, blue) == 1)
 	{
